@@ -1,0 +1,119 @@
+#mainNav {
+  min-height: 56px;
+  background-color: $white;
+  // background-color: transparent;
+  color: $white;
+  font-family: 'Malayalam';
+  .navbar-toggler {
+    font-size: 100%;
+    padding: 0.20rem;
+    color: $white;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  .navbar-brand {
+    color: $black;
+    font-weight: 700;
+    padding: .9rem 0;
+  }
+  #cnc_logo {
+
+  }
+  #COOPER-CO {
+    fill: #fff;
+    transition: all 0.5s ease;
+  }
+  .navbar-nav {
+    .nav-item {
+      &:hover {
+        color: fade(white, 80%);
+        outline: none;
+        background-color: transparent;
+      }
+      &:active,
+      &:focus {
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  @media (min-width: 100px){
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+    &.navbar-shrink {
+      background-color: $white;
+      transition: all 0.2s ease-in-out;
+      border-bottom: 1px #ccc solid;
+      .navbar-brand svg #COOPER-CO {
+        fill: $black !important;
+      }
+      .navbar-toggler {
+        color: $black;
+      }
+    }
+  }
+
+  @media (min-width: 992px) {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+    .navbar-brand {
+      padding: .5rem 0;
+      color: fade-out($white, .5);
+    }
+    .nav-link {
+      transition: none;
+      padding: 2rem 1.5rem;
+      // color: fade-out($white, .5);
+      font-size: 105%;
+      color: $white;
+      &:hover {
+        color: fade-out($white, .25);
+      }
+      &:active {
+        color: white;
+      }
+    }
+    &.navbar-shrink {
+      background-color: $white;
+      transition: all 0.2s ease-in-out;
+      border-bottom: 1px #ccc solid;
+      .navbar-brand svg #COOPER-CO {
+        fill: $black !important;
+      }
+      .nav-link {
+        color: $black;
+        padding: 1.5rem 1.5rem 1.25rem;
+        border-bottom: 0.25rem solid transparent;
+        &:hover {
+          color: $primary;
+        }
+        &:active {
+          color: darken($primary, 15%);
+        }
+        &.active {
+          color: $primary;
+          outline: none;
+          border-bottom: 0.25rem solid $primary;
+        }
+      }
+    }
+  }
+}
+
+.kramer {
+  background-color: $white !important;
+  transition: all 0.2s ease-in-out;
+  border-bottom: 1px #ccc solid !important;
+  .navbar-brand svg #COOPER-CO {
+    fill: $black !important;
+  }
+  .navbar-toggler {
+    color: $black !important;
+  }
+}

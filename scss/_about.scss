@@ -4,6 +4,7 @@
   background: linear-gradient(to bottom, $black 0%,#{fade-out($black, .1)} 75%,#{fade-out($black, .2)} 100%);
   p {
     margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.82);
     &:last-of-type{
       margin-bottom: 5rem;
     }

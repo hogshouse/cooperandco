@@ -15,7 +15,7 @@
         <g id="Logo-SVG">
             <g id="COOPER-&amp;-CO">
                 <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="#000" fill-rule="evenodd" xlink:href="#path-1"></use>
             </g>
         </g>
     </g>

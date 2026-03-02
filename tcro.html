@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Technical CRO for Shopify</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0e0e0e;
+        --cream: #f5f0e8;
+        --green: #1a7a4a;
+        --green-light: #e8f5ee;
+        --green-mid: #2d9e63;
+        --amber: #c8860a;
+        --rule: #d8d0c0;
+        --white: #ffffff;
+        --muted: #666;
+        --gold-bg: #3a2c0e;
+        --gold-bright: #d4a017;
+        --gold-mid: #b8881a;
+        --gold-light: #f5e6b8;
+        --gold-muted: #c4a55a;
+        --gold-row: #fdf8ec;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--cream);
+        color: var(--ink);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      /* ── HEADER ── */
+      header {
+        background: var(--ink);
+        color: var(--cream);
+        padding: 52px 40px 48px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        background: var(--green);
+        opacity: 0.15;
+        pointer-events: none;
+      }
+
+      .header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+        gap: 40px;
+      }
+
+      .brand {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .brand::before {
+        display: none;
+      }
+
+      .co-brand {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(30px, 5vw, 54px);
+        font-weight: 900;
+        line-height: 1.06;
+        max-width: 620px;
+        margin-bottom: 18px;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--green-mid);
+      }
+
+      .header-sub {
+        font-size: 15px;
+        font-weight: 300;
+        opacity: 0.72;
+        max-width: 540px;
+        line-height: 1.75;
+        margin-bottom: 28px;
+      }
+
+      .flow-pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        flex-wrap: wrap;
+      }
+
+      .flow-pill span {
+        padding: 8px 14px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .flow-pill .arrow {
+        padding: 8px 2px;
+        color: var(--green-mid);
+        font-size: 14px;
+      }
+      .flow-pill .highlight {
+        background: var(--green);
+        color: white;
+      }
+
+      .header-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        align-self: flex-end;
+      }
+
+      .stat-box {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 14px 20px;
+        text-align: right;
+        min-width: 150px;
+      }
+
+      .stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 26px;
+        font-weight: 900;
+        color: var(--green-mid);
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.45);
+        margin-top: 4px;
+        line-height: 1.4;
+      }
+
+      /* ── PAGE ── */
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+
+      section {
+        padding: 52px 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      section:last-child {
+        border-bottom: none;
+      }
+
+      .section-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 16px;
+      }
+
+      h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(22px, 3vw, 28px);
+        font-weight: 700;
+        margin-bottom: 10px;
+        line-height: 1.2;
+      }
+
+      .section-intro {
+        color: var(--muted);
+        max-width: 620px;
+        margin-bottom: 32px;
+        line-height: 1.7;
+        font-size: 14.5px;
+      }
+
+      /* ── REVENUE TABLES ── */
+      .tables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .rev-card {
+        background: var(--white);
+        border-top: 3px solid var(--green);
+        overflow: hidden;
+      }
+
+      .rev-card-head {
+        padding: 18px 18px 14px;
+        border-bottom: 1px solid #f0ece4;
+      }
+
+      .store-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: var(--amber);
+        margin-bottom: 5px;
+      }
+
+      .store-revenue {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+
+      .store-revenue sub {
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        color: #999;
+        vertical-align: baseline;
+        margin-left: 4px;
+      }
+
+      .rev-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .rev-table-wrap thead tr {
+        background: #f7f4ee;
+      }
+
+      .rev-table-wrap thead th {
+        padding: 8px 14px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #888;
+        text-align: left;
+      }
+
+      .rev-table-wrap thead th:not(:first-child) {
+        text-align: right;
+      }
+      .rev-table-wrap tbody tr {
+        border-bottom: 1px solid #f2eee6;
+      }
+      .rev-table-wrap tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      .rev-table-wrap tbody td {
+        padding: 10px 14px;
+        font-size: 13px;
+        vertical-align: middle;
+      }
+
+      .rev-table-wrap tbody td:not(:first-child) {
+        text-align: right;
+        font-weight: 600;
+        color: var(--green);
+      }
+
+      .cr-badge {
+        display: inline-block;
+        background: var(--green-light);
+        color: var(--green);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 2px;
+      }
+
+      .table-note {
+        font-size: 11.5px;
+        color: #aaa;
+        margin-top: 16px;
+        line-height: 1.6;
+      }
+
+      /* ── DESKTOP COMPARISON TABLE ── */
+      .comparison-desktop {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 560px;
+      }
+
+      .comparison-table thead tr {
+        border-bottom: 2px solid var(--rule);
+      }
+
+      .comparison-table thead th {
+        padding: 16px 20px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #999;
+        text-align: left;
+      }
+
+      .comparison-table thead th.pkg-col {
+        text-align: center;
+        min-width: 150px;
+      }
+
+      .comparison-table thead th.pkg-col.core {
+        background: #f7f4ee;
+        color: var(--ink);
+        font-size: 13px;
+        letter-spacing: 0.5px;
+      }
+
+      .comparison-table thead th.pkg-col.adv {
+        background: var(--gold-bg);
+        color: var(--gold-bright);
+        font-size: 13px;
+        letter-spacing: 0.5px;
+      }
+
+      .comparison-table tbody tr {
+        border-bottom: 1px solid #f0ece4;
+      }
+      .comparison-table tbody tr:hover {
+        background: #faf7f2;
+      }
+
+      .comparison-table tbody td {
+        padding: 12px 20px;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+
+      .comparison-table tbody td.pkg-col {
+        text-align: center;
+        font-size: 17px;
+      }
+      .comparison-table tbody td.pkg-col.core {
+        background: #faf8f3;
+      }
+      .comparison-table tbody td.pkg-col.adv {
+        background: var(--gold-row);
+      }
+
+      .check {
+        color: var(--green);
+        font-weight: 700;
+      }
+      .check-gold {
+        color: var(--gold-mid);
+        font-weight: 700;
+      }
+      .cross {
+        color: #ccc;
+      }
+
+      .cat-row td {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        color: var(--amber) !important;
+        padding-top: 20px !important;
+        padding-bottom: 8px !important;
+        background: transparent !important;
+      }
+      .cat-row:hover {
+        background: transparent !important;
+      }
+
+      /* ── MOBILE FEATURE CARDS ── */
+      .comparison-mobile {
+        display: none;
+      }
+
+      .mobile-pkg-block {
+        margin-bottom: 28px;
+      }
+
+      .mobile-pkg-header {
+        padding: 18px 20px;
+        margin-bottom: 0;
+      }
+
+      .mobile-pkg-header.core {
+        background: #eeeae0;
+      }
+      .mobile-pkg-header.adv {
+        background: var(--gold-bg);
+      }
+
+      .mobile-pkg-title {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .mobile-pkg-header.core .mobile-pkg-title {
+        color: var(--ink);
+      }
+      .mobile-pkg-header.adv .mobile-pkg-title {
+        color: var(--gold-bright);
+      }
+
+      .mobile-pkg-price {
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      .mobile-pkg-header.core .mobile-pkg-price {
+        color: var(--muted);
+      }
+      .mobile-pkg-header.adv .mobile-pkg-price {
+        color: var(--gold-muted);
+      }
+
+      .mobile-features-wrap {
+        background: var(--white);
+        padding: 0 16px 4px;
+      }
+
+      .mobile-cat-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--amber);
+        padding: 16px 0 6px;
+        display: block;
+      }
+
+      .mobile-feature {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 9px 0;
+        font-size: 13.5px;
+        border-bottom: 1px solid #f0ece4;
+        line-height: 1.45;
+      }
+
+      .mobile-feature:last-child {
+        border-bottom: none;
+      }
+
+      .fi {
+        flex-shrink: 0;
+        margin-top: 1px;
+        font-size: 15px;
+        font-style: normal;
+      }
+      .fi-yes {
+        color: var(--green);
+        font-weight: 700;
+      }
+      .fi-gold {
+        color: var(--gold-mid);
+        font-weight: 700;
+      }
+      .fi-no {
+        color: #ccc;
+      }
+
+      /* ── PRICING CARDS ── */
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 32px;
+      }
+
+      .pkg-card {
+        padding: 34px 30px 38px;
+      }
+      .pkg-card.core {
+        background: var(--white);
+      }
+      .pkg-card.adv {
+        background: var(--gold-bg);
+      }
+
+      .pkg-tag {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      .pkg-card.core .pkg-tag {
+        color: var(--green-mid);
+      }
+      .pkg-card.adv .pkg-tag {
+        color: var(--gold-muted);
+      }
+
+      .pkg-name {
+        font-family: "Playfair Display", serif;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .pkg-card.core .pkg-name {
+        color: var(--ink);
+      }
+      .pkg-card.adv .pkg-name {
+        color: var(--gold-bright);
+      }
+
+      .pkg-price {
+        margin: 16px 0;
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+      }
+
+      .pkg-amount {
+        font-family: "Playfair Display", serif;
+        font-size: 38px;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .pkg-card.core .pkg-amount {
+        color: var(--ink);
+      }
+      .pkg-card.adv .pkg-amount {
+        color: var(--gold-bright);
+      }
+
+      .pkg-per {
+        font-size: 14px;
+        font-weight: 300;
+      }
+      .pkg-card.core .pkg-per {
+        color: #999;
+      }
+      .pkg-card.adv .pkg-per {
+        color: var(--gold-muted);
+      }
+
+      .pkg-tagline {
+        font-size: 13.5px;
+        font-style: italic;
+        line-height: 1.65;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .pkg-card.core .pkg-tagline {
+        color: var(--muted);
+      }
+      .pkg-card.adv .pkg-tagline {
+        color: var(--gold-muted);
+        border-bottom-color: rgba(212, 160, 23, 0.2);
+      }
+
+      .pkg-desc {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .pkg-card.core .pkg-desc {
+        color: var(--muted);
+      }
+      .pkg-card.adv .pkg-desc {
+        color: #b89848;
+      }
+
+      /* ── WHY IT WORKS ── */
+      .reasons-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+        margin-top: 28px;
+      }
+
+      .reason {
+        background: var(--white);
+        padding: 26px 24px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .reason-icon {
+        font-size: 22px;
+        line-height: 1;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .reason-title {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      .reason-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* ── FOOTER ── */
+      .footer-band {
+        background: var(--ink);
+        color: var(--cream);
+        padding: 48px 40px;
+      }
+
+      .footer-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 48px;
+        align-items: center;
+      }
+
+      .footer-inner h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .footer-inner p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.55);
+        line-height: 1.75;
+        max-width: 520px;
+      }
+
+      .footer-cta {
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .cta-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--green-mid);
+        margin-bottom: 12px;
+      }
+
+      .cta-btn {
+        display: block;
+        background: var(--green);
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 14px 28px;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      /* ══════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════ */
+
+      @media (max-width: 860px) {
+        /* Header: stack vertically */
+        .header-inner {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .header-stats {
+          flex-direction: row;
+          align-self: auto;
+          flex-wrap: wrap;
+          gap: 2px;
+        }
+
+        .stat-box {
+          flex: 1 1 120px;
+          min-width: 0;
+          text-align: left;
+        }
+
+        /* Revenue tables: stack */
+        .tables-grid {
+          grid-template-columns: 1fr;
+        }
+
+        /* Hide monthly col on small screens to keep tables tidy */
+        .rev-table-wrap thead th:last-child,
+        .rev-table-wrap tbody td:last-child {
+          display: none;
+        }
+
+        /* Feature table: swap to mobile cards */
+        .comparison-desktop {
+          display: none;
+        }
+        .comparison-mobile {
+          display: block;
+        }
+
+        /* Pricing & reasons: stack */
+        .pricing-grid {
+          grid-template-columns: 1fr;
+        }
+        .reasons-grid {
+          grid-template-columns: 1fr;
+        }
+
+        /* Footer: stack */
+        .footer-inner {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .footer-cta {
+          text-align: left;
+        }
+
+        /* Spacing */
+        .page {
+          padding: 0 20px;
+        }
+        header {
+          padding: 36px 20px 40px;
+        }
+        .footer-band {
+          padding: 40px 20px;
+        }
+        section {
+          padding: 40px 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .flow-pill span {
+          padding: 6px 10px;
+          font-size: 10px;
+        }
+        .stat-num {
+          font-size: 22px;
+        }
+        .pkg-card {
+          padding: 24px 20px 28px;
+        }
+        .pkg-amount {
+          font-size: 32px;
+        }
+        .pkg-name {
+          font-size: 24px;
+        }
+        .reason {
+          padding: 20px 18px;
+        }
+      }
+
+      @media print {
+        .comparison-mobile {
+          display: none !important;
+        }
+        .comparison-desktop {
+          display: block !important;
+        }
+      }
+
+      /* ── INTRO / WHAT IS TECHNICAL CRO ── */
+      .intro-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 52px;
+        align-items: start;
+      }
+
+      .intro-lead {
+        font-family: "Playfair Display", serif;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.45;
+        color: var(--ink);
+        margin-bottom: 16px;
+      }
+
+      .intro-body {
+        font-size: 14.5px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .intro-body p + p {
+        margin-top: 12px;
+      }
+
+      .tcro-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .tcro-step {
+        background: var(--white);
+        padding: 20px 22px;
+        display: flex;
+        gap: 18px;
+        align-items: flex-start;
+        border-left: 3px solid var(--green-light);
+        transition: border-color 0.2s;
+      }
+
+      .tcro-step:hover {
+        border-left-color: var(--green);
+      }
+
+      .tcro-step-num {
+        font-family: "Playfair Display", serif;
+        font-size: 30px;
+        font-weight: 900;
+        color: var(--green-light);
+        line-height: 1;
+        flex-shrink: 0;
+        width: 34px;
+      }
+
+      .tcro-step-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+
+      .tcro-step-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      @media (max-width: 860px) {
+        .intro-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── HEADER ── -->
+    <header>
+      <div class="header-inner">
+        <div>
+          <div class="co-brand">Provided By Fandango Digital</div>
+          <h1>Turn Your Traffic<br />Into <em>Real Revenue.</em></h1>
+          <p class="header-sub">
+            Introducing Technical Conversion Rate Optimisation, a hands-on
+            service that turns your SEO traffic into sales. We make the real
+            changes that drive conversion inside your Shopify store so you don't
+            have to.
+          </p>
+          <div class="flow-pill">
+            <span>SEO Traffic</span>
+            <span class="arrow">→</span>
+            <span class="highlight">Technical CRO</span>
+            <span class="arrow">→</span>
+            <span>Revenue Growth</span>
+          </div>
+        </div>
+        <div class="header-stats">
+          <div class="stat-box">
+            <div class="stat-num">+0.5%</div>
+            <div class="stat-label">
+              Lift = £25k extra<br />on a £500k store
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Implemented for you</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">Monthly</div>
+            <div class="stat-label">Repeatable cycle</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page">
+      <!-- ── WHAT IS TECHNICAL CRO ── -->
+      <section>
+        <div class="section-label">What Is Technical CRO?</div>
+        <div class="intro-grid">
+          <div>
+            <p class="intro-lead">
+              Most Shopify stores are leaving significant revenue on the table,
+              not because they lack traffic, but because that traffic isn't
+              converting.
+            </p>
+            <div class="intro-body">
+              <p>
+                Technical Conversion Rate Optimisation (Technical CRO) is the
+                practice of making precise, data-led changes directly inside
+                your Shopify store to remove the friction that stops visitors
+                from buying. It goes beyond advice and strategy... we actually
+                implement the changes for you.
+              </p>
+              <p>
+                Fandango Digital already has deep insight into which of your
+                pages are attracting traffic and where visitors are dropping
+                off. Technical CRO is the natural next step: taking that
+                intelligence and acting on it, month after month, to convert
+                more of your existing visitors into paying customers.
+              </p>
+              <p>
+                No in-house developer needed. No separate agency to brief. Just
+                measurable improvements, delivered alongside your existing SEO
+                retainer.
+              </p>
+            </div>
+          </div>
+
+          <div class="tcro-steps">
+            <div class="tcro-step">
+              <div class="tcro-step-num">01</div>
+              <div>
+                <div class="tcro-step-title">
+                  SEO Data Identifies the Opportunity
+                </div>
+                <div class="tcro-step-desc">
+                  Your existing SEO data shows us exactly which pages have
+                  traffic but aren't converting giving us a prioritised list of
+                  where to focus first.
+                </div>
+              </div>
+            </div>
+            <div class="tcro-step">
+              <div class="tcro-step-num">02</div>
+              <div>
+                <div class="tcro-step-title">We Audit & Plan the Changes</div>
+                <div class="tcro-step-desc">
+                  We analyse each page through a technical CRO lens, UX, page
+                  structure, speed, trust signals, calls-to-action etc and
+                  produce a concrete plan of improvements.
+                </div>
+              </div>
+            </div>
+            <div class="tcro-step">
+              <div class="tcro-step-num">03</div>
+              <div>
+                <div class="tcro-step-title">
+                  We Implement Directly in Shopify
+                </div>
+                <div class="tcro-step-desc">
+                  We make every change live inside your store. Theme code,
+                  templates, apps, merchandising handled end to end without
+                  involving your team.
+                </div>
+              </div>
+            </div>
+            <div class="tcro-step">
+              <div class="tcro-step-num">04</div>
+              <div>
+                <div class="tcro-step-title">Track, Report & Repeat</div>
+                <div class="tcro-step-desc">
+                  Every change is tracked against revenue. We report monthly and
+                  feed results back into the next cycle, continuous improvement
+                  that compounds over time.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── REVENUE IMPACT ── -->
+      <section>
+        <div class="section-label">The Business Case</div>
+        <h2>The Revenue Impact of Technical CRO</h2>
+        <p class="section-intro">
+          Even modest improvements in conversion rate create substantial revenue
+          gains without spending a penny more on traffic. Here's what a 0.5%,
+          1%, or 1.5% lift looks like across stores of different sizes.
+        </p>
+
+        <div class="tables-grid">
+          <div class="rev-card">
+            <div class="rev-card-head">
+              <div class="store-label">Starter Store</div>
+              <div class="store-revenue">£250,000<sub>annual revenue</sub></div>
+            </div>
+            <div class="rev-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>CVR Lift</th>
+                    <th>+Revenue / yr</th>
+                    <th>+Revenue / mo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cr-badge">+0.5%</span></td>
+                    <td>£12,500</td>
+                    <td>£1,042</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cr-badge">+1.0%</span></td>
+                    <td>£25,000</td>
+                    <td>£2,083</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cr-badge">+1.5%</span></td>
+                    <td>£37,500</td>
+                    <td>£3,125</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="rev-card">
+            <div class="rev-card-head">
+              <div class="store-label">Growing Store</div>
+              <div class="store-revenue">£500,000<sub>annual revenue</sub></div>
+            </div>
+            <div class="rev-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>CVR Lift</th>
+                    <th>+Revenue / yr</th>
+                    <th>+Revenue / mo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cr-badge">+0.5%</span></td>
+                    <td>£25,000</td>
+                    <td>£2,083</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cr-badge">+1.0%</span></td>
+                    <td>£50,000</td>
+                    <td>£4,167</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cr-badge">+1.5%</span></td>
+                    <td>£75,000</td>
+                    <td>£6,250</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="rev-card">
+            <div class="rev-card-head">
+              <div class="store-label">Established Store</div>
+              <div class="store-revenue">
+                £1,000,000<sub>annual revenue</sub>
+              </div>
+            </div>
+            <div class="rev-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>CVR Lift</th>
+                    <th>+Revenue / yr</th>
+                    <th>+Revenue / mo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cr-badge">+0.5%</span></td>
+                    <td>£50,000</td>
+                    <td>£4,167</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cr-badge">+1.0%</span></td>
+                    <td>£100,000</td>
+                    <td>£8,333</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cr-badge">+1.5%</span></td>
+                    <td>£150,000</td>
+                    <td>£12,500</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="table-note">
+          * Revenue uplift shown as a proportional increase on existing annual
+          revenue. Monthly figures are illustrative. Actual results vary by
+          store, traffic quality and implementation.
+        </p>
+      </section>
+
+      <!-- ── FEATURE COMPARISON ── -->
+      <section>
+        <div class="section-label">Technical CRO Packages</div>
+        <h2>Two Packages. Every Store Covered.</h2>
+        <p class="section-intro">
+          Both packages use your existing Fandango SEO data to target the
+          highest-impact pages. All Technical CRO changes are implemented
+          directly in your Shopify store by Cooper &amp; Co — no developer
+          needed, no separate briefing required.
+        </p>
+
+        <!-- DESKTOP TABLE -->
+        <div class="comparison-desktop">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th style="width: 56%">Feature</th>
+                <th class="pkg-col core">Conversion Core</th>
+                <th class="pkg-col adv">Conversion Advanced</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cat-row">
+                <td colspan="3">Core Shopify Optimisation</td>
+              </tr>
+              <tr>
+                <td>
+                  Product, Collection, Search &amp; Cart template optimisation
+                </td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Online Store 2.0 section improvements</td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>UX/UI refinements based on SEO &amp; analytics data</td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Custom theme &amp; Liquid code tweaks</td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Structural conversion blockers fixed</td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Monthly Review &amp; task prioritisation</td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Reporting showing revenue impact</td>
+                <td class="pkg-col core"><span class="check">✓</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr class="cat-row">
+                <td colspan="3">Revenue Growth Systems</td>
+              </tr>
+              <tr>
+                <td>App selection, installation &amp; configuration</td>
+                <td class="pkg-col core"><span class="cross">—</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Post-purchase &amp; in-cart upsells</td>
+                <td class="pkg-col core"><span class="cross">—</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>
+                  AOV optimisation (bundles, recommendations, merchandising)
+                </td>
+                <td class="pkg-col core"><span class="cross">—</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+              <tr>
+                <td>Ongoing testing &amp; refinement of revenue systems</td>
+                <td class="pkg-col core"><span class="cross">—</span></td>
+                <td class="pkg-col adv"><span class="check-gold">✓</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- MOBILE CARDS (shown below 860px) -->
+        <div class="comparison-mobile">
+          <div class="mobile-pkg-block">
+            <div class="mobile-pkg-header core">
+              <div class="mobile-pkg-title">Conversion Core</div>
+              <div class="mobile-pkg-price">£495 / month</div>
+            </div>
+            <div class="mobile-features-wrap">
+              <span class="mobile-cat-label">Core Shopify Optimisation</span>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> Product, Collection, Search &amp;
+                Cart template optimisation
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> Online Store 2.0 section improvements
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> UX/UI refinements based on SEO &amp;
+                analytics data
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> Custom theme &amp; Liquid code tweaks
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> Structural conversion blockers fixed
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> Monthly Review &amp; task
+                prioritisation
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-yes">✓</i> Reporting showing revenue impact
+              </div>
+              <span class="mobile-cat-label">Revenue Growth Systems</span>
+              <div class="mobile-feature">
+                <i class="fi fi-no">—</i> App selection, installation &amp;
+                configuration
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-no">—</i> Post-purchase &amp; in-cart upsells
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-no">—</i> AOV optimisation (bundles,
+                recommendations, merchandising)
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-no">—</i> Ongoing testing &amp; refinement of
+                revenue systems
+              </div>
+            </div>
+          </div>
+
+          <div class="mobile-pkg-block">
+            <div class="mobile-pkg-header adv">
+              <div class="mobile-pkg-title">Conversion Advanced</div>
+              <div class="mobile-pkg-price">£749 / month</div>
+            </div>
+            <div class="mobile-features-wrap">
+              <span class="mobile-cat-label">Core Shopify Optimisation</span>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Product, Collection, Search &amp;
+                Cart template optimisation
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Online Store 2.0 section
+                improvements
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> UX/UI refinements based on SEO &amp;
+                analytics data
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Custom theme &amp; Liquid code
+                tweaks
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Structural conversion blockers fixed
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Monthly Review &amp; task
+                prioritisation
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Reporting showing revenue impact
+              </div>
+              <span class="mobile-cat-label">Revenue Growth Systems</span>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> App selection, installation &amp;
+                configuration
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Post-purchase &amp; in-cart upsells
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> AOV optimisation (bundles,
+                recommendations, merchandising)
+              </div>
+              <div class="mobile-feature">
+                <i class="fi fi-gold">✓</i> Ongoing testing &amp; refinement of
+                revenue systems
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRICING CARDS -->
+        <div class="pricing-grid">
+          <div class="pkg-card core">
+            <div class="pkg-tag">Package 01</div>
+            <div class="pkg-name">Conversion Core</div>
+            <div class="pkg-price">
+              <span class="pkg-amount">£495</span>
+              <span class="pkg-per">/ month</span>
+            </div>
+            <div class="pkg-tagline">
+              "We optimise your store so more visitors convert. Even small lifts
+              create big revenue wins!"
+            </div>
+            <div class="pkg-desc">
+              Ideal for stores wanting to make data-led improvements each month,
+              using your SEO data to target the right pages at the right time.
+              Core improvements, implemented and tracked.
+            </div>
+          </div>
+          <div class="pkg-card adv">
+            <div class="pkg-tag">Package 02</div>
+            <div class="pkg-name">Conversion Advanced</div>
+            <div class="pkg-price">
+              <span class="pkg-amount">£749</span>
+              <span class="pkg-per">/ month</span>
+            </div>
+            <div class="pkg-tagline">
+              "We add upsells, bundles, and revenue systems that maximise every
+              visitor's value, turning your store into a revenue engine!"
+            </div>
+            <div class="pkg-desc">
+              Everything in Core, plus the revenue systems that grow average
+              order value and lifetime value. The complete package for stores
+              serious about sustainable, measurable growth.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── WHY IT WORKS ── -->
+      <section>
+        <div class="section-label">Why It Works</div>
+        <h2>Technical CRO Completes the Picture</h2>
+        <p class="section-intro">
+          Your SEO investment drives the traffic. Technical CRO turns that
+          traffic into revenue. This creates a complete, measurable growth cycle
+          that runs month after month.
+        </p>
+
+        <div class="reasons-grid">
+          <div class="reason">
+            <div class="reason-icon">🛠️</div>
+            <div>
+              <div class="reason-title">No developer to hire or manage</div>
+              <div class="reason-desc">
+                We handle all implementation directly in your Shopify store. No
+                briefing, no handoffs, no dropped balls.
+              </div>
+            </div>
+          </div>
+          <div class="reason">
+            <div class="reason-icon">📊</div>
+            <div>
+              <div class="reason-title">Every change is data-led</div>
+              <div class="reason-desc">
+                We use the SEO data already driving traffic to your store to
+                identify the highest-impact opportunities first.
+              </div>
+            </div>
+          </div>
+          <div class="reason">
+            <div class="reason-icon">📈</div>
+            <div>
+              <div class="reason-title">
+                Improvements are directly measurable
+              </div>
+              <div class="reason-desc">
+                Reporting shows the revenue impact so you can see exactly what
+                the investment is returning.
+              </div>
+            </div>
+          </div>
+          <div class="reason">
+            <div class="reason-icon">🔁</div>
+            <div>
+              <div class="reason-title">Ongoing value, every month</div>
+              <div class="reason-desc">
+                Every optimisation compounds over time. More traffic converting
+                means more revenue without extra ad spend.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <div class="footer-band">
+      <div class="footer-inner">
+        <div>
+          <h3>Ready to Add Technical CRO to Your SEO Retainer?</h3>
+          <p>
+            Our Technical CRO packages ensure your SEO traffic actually converts
+            turning more visitors into paying customers and boosting your bottom
+            line. Small increases in conversion rate can generate tens or
+            hundreds of thousands in additional revenue without increasing your
+            traffic spend.
+          </p>
+          <p
+            style="
+              margin-top: 16px;
+              font-size: 12px;
+              color: rgba(255, 255, 255, 0.3);
+              letter-spacing: 0.5px;
+            "
+          ></p>
+        </div>
+        <div class="footer-cta">
+          <div class="cta-label">Get Started</div>
+          <a href="https://www.fandangodigital.co.uk/" class="cta-btn"
+            >Talk to Us Today →</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
